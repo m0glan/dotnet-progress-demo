@@ -81,7 +81,7 @@ namespace AsyncProgressReportingDemo
             });
 
             StartStepSequenceExecution = 
-                new MvxAsyncCommand(async () => await service_.Execute(sequence_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
+                new MvxAsyncCommand(async () => await service_.ExecuteAsync(sequence_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
 
             PerformUserAction = new MvxCommand(() =>
             {
