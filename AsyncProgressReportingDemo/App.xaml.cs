@@ -11,7 +11,8 @@ namespace AsyncProgressReportingDemo
         {
             var service = new StepSequenceService();
             var viewModel = new MainWindowViewModel(service);
-            new MainWindow(viewModel);
+            var window = new MainWindow(viewModel);
+            window.Show();
         }
     }
 }

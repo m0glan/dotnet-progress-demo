@@ -15,7 +15,6 @@ namespace AsyncProgressReportingDemo
         {
             InitializeComponent();
             DataContext = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
-            Show();
         }
     }
 }
