@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AsyncProgressReportingDemo
 {
-    public class StepSequenceService : IStepSequenceService
+    public class SequenceService : ISequenceService
     {
         public async Task ExecuteAsync(IEnumerable<IStep> sequence, IProgress<StepProgressEventArgs> progress, CancellationToken token)
         {

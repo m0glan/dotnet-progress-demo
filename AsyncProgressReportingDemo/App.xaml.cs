@@ -9,7 +9,7 @@ namespace AsyncProgressReportingDemo
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var service = new StepSequenceService();
+            var service = new SequenceService();
             var viewModel = new MainWindowViewModel(service);
             var window = new MainWindow(viewModel);
             window.Show();

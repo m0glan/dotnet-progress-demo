@@ -48,13 +48,13 @@ namespace AsyncProgressReportingDemo
 
         private readonly IEnumerable<IStep> sequence_;
 
-        private readonly IStepSequenceService service_;
+        private readonly ISequenceService service_;
 
         public ICommand StartStepSequenceExecution { get; }
 
         public ICommand PerformUserAction { get; }
 
-        public MainWindowViewModel(IStepSequenceService service)
+        public MainWindowViewModel(ISequenceService service)
         {
             service_ = service ?? throw new ArgumentNullException(nameof(service));
 
