@@ -3,6 +3,7 @@ using MvvmCross.Commands;
 using MvvmCross.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 
@@ -10,6 +11,13 @@ namespace AsyncProgressReportingDemo
 {
     public class MainWindowViewModel : MvxViewModel, IMainWindowViewModel
     {
+        private string currentStepKey_;
+        public string CurrentStepKey
+        {
+            get => currentStepKey_;
+            set => SetProperty(ref currentStepKey_, value, nameof(CurrentStepKey));
+        }
+
         private string currentStepName_ = "Start the sequence first";
         public string CurrentStepName
         {
@@ -38,6 +46,8 @@ namespace AsyncProgressReportingDemo
             set => SetProperty(ref isStepSequenceExecuting_, value, nameof(IsStepSequenceExecuting));
         }
 
+        private readonly IEnumerable<IStep> steps_;
+
         private readonly IStepSequenceService service_;
 
         public ICommand StartStepSequenceExecution { get; }
@@ -48,19 +58,37 @@ namespace AsyncProgressReportingDemo
         {
             service_ = service ?? throw new ArgumentNullException(nameof(service));
 
-            var steps = new List<IStep>
+            steps_ = new List<IStep>
             {
-                new Step("Step #1"),
-                new Step("Step #2"),
-                new Step("Step #3")
+                new Step(Guid.NewGuid().ToString(), "Step #1"),
+                new Step(Guid.NewGuid().ToString(), "Step #2"),
+                new Step(Guid.NewGuid().ToString(), "Step #3")
             };
+
             var progress = new Progress<StepProgressEventArgs>(e =>
             {
+                IsStepSequenceExecuting = true;
+
+                CurrentStepKey = e.Step.Key;
                 CurrentStepName = e.Step.Name;
                 CurrentStepProgress = e.Progress;
                 IsUserActionRequired = e.IsUserActionRequired;
+
+                if (CurrentStepProgress == 100)
+                {
+                    IsStepSequenceExecuting = false;
+                }
             });
-            StartStepSequenceExecution = new MvxAsyncCommand(async () => await service_.Execute(steps, progress, CancellationToken.None));
+
+            StartStepSequenceExecution = 
+                new MvxAsyncCommand(async () => await service_.Execute(steps_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
+
+            PerformUserAction = new MvxCommand(() =>
+            {
+                steps_
+                .FirstOrDefault(s => s.Key.Equals(currentStepKey_, StringComparison.InvariantCultureIgnoreCase))?
+                .Resume();
+            });
         }
     }
 }

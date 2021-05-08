@@ -6,8 +6,12 @@
         xmlns:local="clr-namespace:AsyncProgressReportingDemo"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"></local:BoolToVisibilityConverter>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
             <RowDefinition Height="30" />
@@ -20,5 +24,9 @@
                 Command="{Binding StartStepSequenceExecution}" />
         <ProgressBar Grid.Row="2"
                      Value="{Binding CurrentStepProgress}"/>
+        <Button Grid.Row="3"
+                Content="Continue step execution"
+                Command="{Binding PerformUserAction}"
+                Visibility="{Binding IsUserActionRequired, Converter={StaticResource BoolToVisibilityConverter}}" />
     </Grid>
 </Window>

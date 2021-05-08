@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AsyncProgressReportingDemo.Core
 {
@@ -8,15 +7,24 @@ namespace AsyncProgressReportingDemo.Core
     {
         public event StepProgressEventHandler ProgressChanged;
 
+        private readonly ManualResetEvent resetEvent_ = new ManualResetEvent(false);
+
+        public string Key { get; }
+
         public string Name { get; }
 
-        public Step(string name)
+        public Step(string key, string name)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+            Key = key;
+
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentNullException(nameof(name));
             }
-
             Name = name;
         }
 
@@ -27,8 +35,20 @@ namespace AsyncProgressReportingDemo.Core
                 bool isUserActionRequired = i == 50;
                 var e = new StepProgressEventArgs(this, i, isUserActionRequired);
                 OnProgressChanged(e);
-                Thread.Sleep(200);
+
+                if (isUserActionRequired)
+                {
+                    resetEvent_.Reset();
+                    resetEvent_.WaitOne();
+                }
+                
+                Thread.Sleep(10);
             }
+        }
+
+        public void Resume()
+        {
+            resetEvent_.Set();
         }
 
         private void OnProgressChanged(StepProgressEventArgs e)

@@ -4,6 +4,8 @@ namespace AsyncProgressReportingDemo
 {
     public interface IMainWindowViewModel
     {
+        string CurrentStepKey { get; set; }
+
         string CurrentStepName { get; set; }
 
         int CurrentStepProgress { get; set; }
