@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AsyncProgressReportingDemo
@@ -81,7 +82,7 @@ namespace AsyncProgressReportingDemo
             });
 
             StartStepSequenceExecution = 
-                new MvxAsyncCommand(async () => await service_.ExecuteAsync(sequence_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
+                new MvxAsyncCommand(() => service_.ExecuteAsync(sequence_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
 
             PerformUserAction = new MvxCommand(() =>
             {

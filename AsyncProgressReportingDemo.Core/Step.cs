@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace AsyncProgressReportingDemo.Core
 {
     public class Step : IStep
     {
-        public event StepProgressEventHandler ProgressChanged;
-
         private readonly ManualResetEvent resetEvent_ = new(false);
 
         public string Key { get; }
@@ -28,33 +27,31 @@ namespace AsyncProgressReportingDemo.Core
             Name = name;
         }
 
-        public void Execute()
+        public void Execute(IProgress<StepProgressEventArgs> progress, CancellationToken token)
         {
             for (int i = 1; i <= 100; i++)
             {
+                Task.Delay(TimeSpan.FromMilliseconds(10))
+                    .Wait();
                 bool isUserActionRequired = i == 50;
-                var e = new StepProgressEventArgs(this, i, isUserActionRequired);
-                OnProgressChanged(e);
+                progress?.Report(new StepProgressEventArgs(this, i, isUserActionRequired));
 
                 if (isUserActionRequired)
                 {
                     resetEvent_.Reset();
                     resetEvent_.WaitOne();
                 }
-                
-                Thread.Sleep(10);
             }
+        }
+
+        public async Task ExecuteAsync(IProgress<StepProgressEventArgs> progress, CancellationToken token)
+        {
+            await Task.Run(() => Execute(progress, token), token);
         }
 
         public void Resume()
         {
             resetEvent_.Set();
-        }
-
-        private void OnProgressChanged(StepProgressEventArgs e)
-        {
-            StepProgressEventHandler handler = ProgressChanged;
-            handler?.Invoke(this, e);
         }
     }
 }
