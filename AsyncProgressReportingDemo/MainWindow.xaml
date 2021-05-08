@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
 
+        <TextBlock Grid.Row="0" 
+                   Text="{Binding CurrentStepName}" />
+        <Button Grid.Row="1" 
+                Content="Start"
+                Command="{Binding StartStepSequenceExecution}" />
+        <ProgressBar Grid.Row="2"
+                     Value="{Binding CurrentStepProgress}"/>
     </Grid>
 </Window>

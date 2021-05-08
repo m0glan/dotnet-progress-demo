@@ -4,6 +4,8 @@
     {
         event StepProgressEventHandler ProgressChanged;
 
+        string Name { get; }
+
         void Execute();
     }
 }

@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MvvmCross" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AsyncProgressReportingDemo.Core\AsyncProgressReportingDemo.Core.csproj" />
   </ItemGroup>
 
