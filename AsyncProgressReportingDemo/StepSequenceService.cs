@@ -8,7 +8,7 @@ namespace AsyncProgressReportingDemo
 {
     public class StepSequenceService : IStepSequenceService
     {
-        public async Task Execute(IEnumerable<IStep> steps, IProgress<StepProgressEventArgs> progress, CancellationToken token)
+        public async Task Execute(IEnumerable<IStep> sequence, IProgress<StepProgressEventArgs> progress, CancellationToken token)
         {
             await Task.Run(() =>
             {
@@ -17,7 +17,7 @@ namespace AsyncProgressReportingDemo
                     progress?.Report(e);
                 }
 
-                foreach (var step in steps)
+                foreach (var step in sequence)
                 {
                     step.ProgressChanged += c_ProgressChanged;
 

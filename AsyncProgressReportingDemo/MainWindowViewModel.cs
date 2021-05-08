@@ -46,7 +46,7 @@ namespace AsyncProgressReportingDemo
             set => SetProperty(ref isStepSequenceExecuting_, value, nameof(IsStepSequenceExecuting));
         }
 
-        private readonly IEnumerable<IStep> steps_;
+        private readonly IEnumerable<IStep> sequence_;
 
         private readonly IStepSequenceService service_;
 
@@ -58,7 +58,7 @@ namespace AsyncProgressReportingDemo
         {
             service_ = service ?? throw new ArgumentNullException(nameof(service));
 
-            steps_ = new List<IStep>
+            sequence_ = new List<IStep>
             {
                 new Step(Guid.NewGuid().ToString(), "Step #1"),
                 new Step(Guid.NewGuid().ToString(), "Step #2"),
@@ -81,11 +81,11 @@ namespace AsyncProgressReportingDemo
             });
 
             StartStepSequenceExecution = 
-                new MvxAsyncCommand(async () => await service_.Execute(steps_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
+                new MvxAsyncCommand(async () => await service_.Execute(sequence_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
 
             PerformUserAction = new MvxCommand(() =>
             {
-                steps_
+                sequence_
                 .FirstOrDefault(s => s.Key.Equals(currentStepKey_, StringComparison.InvariantCultureIgnoreCase))?
                 .Resume();
             });

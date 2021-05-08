@@ -8,6 +8,6 @@ namespace AsyncProgressReportingDemo
 {
     public interface IStepSequenceService
     {
-        Task Execute(IEnumerable<IStep> steps, IProgress<StepProgressEventArgs> progress, CancellationToken token);
+        Task Execute(IEnumerable<IStep> sequence, IProgress<StepProgressEventArgs> progress, CancellationToken token);
     }
 }
