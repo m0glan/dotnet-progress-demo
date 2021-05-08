@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncProgressReportingDemo", "AsyncProgressReportingDemo\AsyncProgressReportingDemo.csproj", "{58F74608-C23C-4BF5-B059-CD613360342F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncProgressReportingDemo", "AsyncProgressReportingDemo\AsyncProgressReportingDemo.csproj", "{58F74608-C23C-4BF5-B059-CD613360342F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncProgressReportingDemo.Core", "AsyncProgressReportingDemo.Core\AsyncProgressReportingDemo.Core.csproj", "{85B518F2-9C03-41D9-9FA4-C9C816605A5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncProgressReportingDemo.Core", "AsyncProgressReportingDemo.Core\AsyncProgressReportingDemo.Core.csproj", "{85B518F2-9C03-41D9-9FA4-C9C816605A5F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncProgressReportingDemo.Console", "AsyncProgressReportingDemo.Console\AsyncProgressReportingDemo.Console.csproj", "{DE0EE99B-3834-4DD9-AF62-494500279344}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{85B518F2-9C03-41D9-9FA4-C9C816605A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85B518F2-9C03-41D9-9FA4-C9C816605A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85B518F2-9C03-41D9-9FA4-C9C816605A5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0EE99B-3834-4DD9-AF62-494500279344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0EE99B-3834-4DD9-AF62-494500279344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0EE99B-3834-4DD9-AF62-494500279344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0EE99B-3834-4DD9-AF62-494500279344}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
