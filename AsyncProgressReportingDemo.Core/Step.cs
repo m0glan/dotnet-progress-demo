@@ -31,8 +31,8 @@ namespace AsyncProgressReportingDemo.Core
         {
             for (int i = 1; i <= 100; i++)
             {
-                Task.Delay(TimeSpan.FromMilliseconds(10))
-                    .Wait();
+                Task.Delay(TimeSpan.FromMilliseconds(10), token)
+                    .Wait(token);
                 bool isUserActionRequired = i == 50;
                 progress?.Report(new StepProgressEventArgs(this, i, isUserActionRequired));
 
