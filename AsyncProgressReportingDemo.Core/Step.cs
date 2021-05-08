@@ -7,7 +7,7 @@ namespace AsyncProgressReportingDemo.Core
     {
         public event StepProgressEventHandler ProgressChanged;
 
-        private readonly ManualResetEvent resetEvent_ = new ManualResetEvent(false);
+        private readonly ManualResetEvent resetEvent_ = new(false);
 
         public string Key { get; }
 
