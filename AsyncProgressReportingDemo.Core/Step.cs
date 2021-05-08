@@ -38,8 +38,7 @@ namespace AsyncProgressReportingDemo.Core
 
                 if (isUserActionRequired)
                 {
-                    resetEvent_.Reset();
-                    resetEvent_.WaitOne();
+                    Pause();
                 }
             }
         }
@@ -47,6 +46,12 @@ namespace AsyncProgressReportingDemo.Core
         public async Task ExecuteAsync(IProgress<StepProgressEventArgs> progress, CancellationToken token)
         {
             await Task.Run(() => Execute(progress, token), token);
+        }
+
+        private void Pause()
+        {
+            resetEvent_.Reset();
+            resetEvent_.WaitOne();
         }
 
         public void Resume()
