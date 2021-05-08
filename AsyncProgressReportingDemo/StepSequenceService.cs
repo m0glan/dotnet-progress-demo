@@ -20,8 +20,15 @@ namespace AsyncProgressReportingDemo
                 foreach (var step in steps)
                 {
                     step.ProgressChanged += c_ProgressChanged;
-                    step.Execute();
-                    step.ProgressChanged -= c_ProgressChanged;
+
+                    try
+                    {
+                        step.Execute();
+                    }
+                    finally
+                    {
+                        step.ProgressChanged -= c_ProgressChanged;
+                    }
                 }
             }, 
             token);
