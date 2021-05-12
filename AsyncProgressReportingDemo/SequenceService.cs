@@ -15,9 +15,7 @@ namespace AsyncProgressReportingDemo
             {
                 foreach (var step in sequence)
                 {
-                    var stepProgress = new Progress<StepProgressEventArgs>();
-                    stepProgress.ProgressChanged += (s, e) => progress?.Report(e);
-                    step.Execute(stepProgress, token);
+                    step.Execute(progress, token);
                 }
             }, 
             token);
