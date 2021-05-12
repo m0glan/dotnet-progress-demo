@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AsyncProgressReportingDemo
@@ -40,18 +39,18 @@ namespace AsyncProgressReportingDemo
             set => SetProperty(ref isUserActionRequired_, value, nameof(IsUserActionRequired));
         }
 
-        private bool isStepSequenceExecuting_ = false;
-        public bool IsStepSequenceExecuting
+        private bool isSequenceExecuting_ = false;
+        public bool IsSequenceExecuting
         {
-            get => isStepSequenceExecuting_;
-            set => SetProperty(ref isStepSequenceExecuting_, value, nameof(IsStepSequenceExecuting));
+            get => isSequenceExecuting_;
+            set => SetProperty(ref isSequenceExecuting_, value, nameof(IsSequenceExecuting));
         }
 
         private readonly IEnumerable<IStep> sequence_;
 
         private readonly ISequenceService service_;
 
-        public ICommand StartStepSequenceExecution { get; }
+        public ICommand StartSequenceExecution { get; }
 
         public ICommand PerformUserAction { get; }
 
@@ -68,7 +67,7 @@ namespace AsyncProgressReportingDemo
 
             var progress = new Progress<StepProgressEventArgs>(e =>
             {
-                IsStepSequenceExecuting = true;
+                IsSequenceExecuting = true;
 
                 CurrentStepKey = e.Step.Key;
                 CurrentStepName = e.Step.Name;
@@ -77,12 +76,12 @@ namespace AsyncProgressReportingDemo
 
                 if (CurrentStepProgress == 100)
                 {
-                    IsStepSequenceExecuting = false;
+                    IsSequenceExecuting = false;
                 }
             });
 
-            StartStepSequenceExecution = 
-                new MvxAsyncCommand(() => service_.ExecuteAsync(sequence_, progress, CancellationToken.None), () => !IsStepSequenceExecuting);
+            StartSequenceExecution = 
+                new MvxAsyncCommand(() => service_.ExecuteAsync(sequence_, progress, CancellationToken.None), () => !IsSequenceExecuting);
 
             PerformUserAction = new MvxCommand(() =>
             {

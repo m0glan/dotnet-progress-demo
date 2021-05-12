@@ -11,12 +11,16 @@ namespace AsyncProgressReportingDemo
         /// <inheritdoc />
         public async Task ExecuteAsync(IEnumerable<IStep> sequence, IProgress<StepProgressEventArgs> progress, CancellationToken token)
         {
-            foreach (var step in sequence)
+            await Task.Run(() =>
             {
-                var stepProgress = new Progress<StepProgressEventArgs>();
-                stepProgress.ProgressChanged += (s, e) => progress?.Report(e);
-                await step.ExecuteAsync(stepProgress, token);
-            }
+                foreach (var step in sequence)
+                {
+                    var stepProgress = new Progress<StepProgressEventArgs>();
+                    stepProgress.ProgressChanged += (s, e) => progress?.Report(e);
+                    step.Execute(stepProgress, token);
+                }
+            }, 
+            token);
         }
     }
 }

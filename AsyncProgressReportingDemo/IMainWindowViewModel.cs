@@ -12,9 +12,9 @@ namespace AsyncProgressReportingDemo
 
         bool IsUserActionRequired { get; set; }
 
-        bool IsStepSequenceExecuting { get; set; }
+        bool IsSequenceExecuting { get; set; }
 
-        ICommand StartStepSequenceExecution { get; }
+        ICommand StartSequenceExecution { get; }
 
         ICommand PerformUserAction { get; }
     }
